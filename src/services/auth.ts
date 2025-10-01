@@ -10,7 +10,7 @@ const registerNewUser = async ({email, password, name}: User) => {
     const checkIs = await UserModel.findOne({email}); //Verifica si ya existe el usuario (email unico)
     if (checkIs) return "ALREADY_USER"; //Si el usuario ya existe se notifica
 
-    const passHash = await encrypt(password); //Crea la password encryptada
+    const passHash = await encrypt(password); //Crea la password encryptada con Hash
     const registerNewUser = await UserModel.create({email, password: passHash, name}); //Crea el nuevo usuario
 
     return registerNewUser;

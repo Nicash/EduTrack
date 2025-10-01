@@ -1,6 +1,9 @@
+//Schema sirve para definir la estructura de los documentos en una coleccion de MongoDB
+//Model convierte un Schema en un modelo, que es el que permite interactura con la base de datos
 import { Schema, Types, model, Model} from "mongoose";
 import { User } from "../interfaces/user.interface";
 
+//Creacion del Schema del usuario
 const UserSchema = new Schema<User>(
     {
         name: {
@@ -18,7 +21,7 @@ const UserSchema = new Schema<User>(
         },
         description: {
             type: String,
-            default: "Hola, soy la descripcion",
+            default: "---",
         }
     },
 
@@ -28,6 +31,7 @@ const UserSchema = new Schema<User>(
     }
 );
 
+//Creacion del modelo de usuario
 const UserModel = model("users", UserSchema);
 
 export default UserModel

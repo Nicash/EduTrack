@@ -1,10 +1,13 @@
 import { Router } from "express";
 import { registerCtrl, loginCtrl } from "../controllers/auth";
 
+//Rutas para la autenticacion
 const router = Router();
 
-// http://localhost:3002/auth/register [POST]
+// POST /register
 router.post("/register", registerCtrl);
+
+// POST /login
 router.post("/login", loginCtrl);
 
 

@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { createSubject, getSubjects } from "../services/subject";
 import { handleHttp } from "../utils/error.handle";
 
+//Controlador agregar materias
 export const addSubject = async (req: Request, res: Response) => {
   try {
     const subject = await createSubject(req.body);
@@ -12,6 +13,7 @@ export const addSubject = async (req: Request, res: Response) => {
   }
 };
 
+//Controlador obtener todas las materias
 export const listSubjects = async (_req: Request, res: Response) => {
   try {
     const subjects = await getSubjects();
