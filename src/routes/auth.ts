@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { registerCtrl, loginCtrl } from "../controllers/auth";
 
-//Rutas para la autenticacion
+//Ruta para la autenticacion
 const router = Router();
 
 // POST /register
@@ -11,4 +11,4 @@ router.post("/register", registerCtrl);
 router.post("/login", loginCtrl);
 
 
-export { router };
+export {router};

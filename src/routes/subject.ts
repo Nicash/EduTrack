@@ -10,4 +10,4 @@ router.post("/", addSubject);
 // GET /subjects
 router.get("/", listSubjects);
 
-export { router };
+export {router};
