@@ -1,0 +1,58 @@
+### Enviar gmail
+POST http://localhost:3001/notification/send
+Content-Type: application/json
+
+{
+  "to": "mgbdndgg@gmail.com",
+  "subject": "Prueba",
+  "message": "Este es un mensaje de prueba."
+}
+
+### Registrar nuevo usuario
+POST http://localhost:3001/auth/register
+Content-Type: application/json
+
+{
+  "email": "ejemplo@gmail.com",
+  "password": "contrasenia",
+  "name": "Marcos"
+}
+
+### Iniciar sesion
+POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+  "email": "ejemplo@gmail.com",
+  "password": "contrasenia"
+}
+
+### Crear materia
+POST http://localhost:3001/subject/add
+Content-Type: application/json
+
+{
+  "name": "matematicas",
+  "objective": "crear una aplicacion completa desde cero",
+  "content": "frontend, backend, API-REST"
+}
+
+### Obtener materia
+GET http://localhost:3001/subject/get?name=matematicas
+
+### Obtener materias
+GET http://localhost:3001/subject/getAll
+
+### Eliminar materia
+DELETE http://localhost:3001/subject/delete?name=fisica
+Content-Type: application/json
+
+### Modificar materia
+PUT http://localhost:3001/subject/update/68e2079c3ddd754458d2602c
+Content-Type: application/json
+
+{
+  "name": "desarrollo de hardware",
+  "objective": "arreglar una computadora desde cero",
+  "content": "Arquitectura de computadoras"
+}

@@ -3,25 +3,30 @@ import nodemailer from "nodemailer"; //Libreria para enviar emails
 //Creacion de transportador
 const transporter = nodemailer.createTransport({
 
-    service: "gmail", //Se usara gmail como servicio
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
 
-    //Credenciales de seguridad
-    auth: { 
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
+  //Credenciales de seguridad
+  auth: { 
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+  },
 });
 
 //Servicio enviar gmail
-export const sendEmail = async (to: string,subject: string, message: string) => {
+export const sendEmail = async (to: string, subject: string, message: string) => {
 
-    const info = await transporter.sendMail({
-        from: process.env.EMAIL_USER, //remitente
-        to, //destinatario
-        subject, //asunto
-        text: message, //mensaje
-    });
+  console.log(`📧 Sending email to: ${to}`);
 
-    return info;
+  const info = await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to,
+    subject,
+    text: message,
+  });
 
+  console.log(`✅ Email sent to: ${to}`);
+
+  return info;
 };

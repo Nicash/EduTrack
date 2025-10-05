@@ -6,8 +6,10 @@ import { Subject } from "../interfaces/subject.interface";
 //Creacion el Schema de la materia
 const SubjectSchema = new Schema<Subject>({
   name: { type: String, required: true },
-  year: { type: Number, required: true }
-}, {
+  objective: { type: String, required: true },
+  content: {type: String, required: true}
+},
+{
   timestamps: true,
   versionKey: false
 });

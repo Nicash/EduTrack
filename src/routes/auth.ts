@@ -10,5 +10,4 @@ router.post("/register", registerCtrl);
 // POST /login
 router.post("/login", loginCtrl);
 
-
 export {router};

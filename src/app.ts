@@ -3,8 +3,9 @@ import express from "express";
 import cors from "cors";
 import { router } from "./routes";
 import db from "./config/mongo";
+import dotenv from "dotenv";
 
-
+dotenv.config();
 const PORT = process.env.PORT || 3001; //Puerto donde se ejecuta el servidor
 const app = express(); //Instancia de express
 

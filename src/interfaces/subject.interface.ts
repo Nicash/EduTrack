@@ -2,5 +2,6 @@
 
 export interface Subject {
   name: string;
-  year: number;
+  objective: string;
+  content: string;
 }
