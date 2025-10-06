@@ -5,6 +5,6 @@ services:
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_DATABASE: mg
+      MONGO_INITDB_DATABASE: edutrack
     volumes:
       - ./data/mongo:/data/db

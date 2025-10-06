@@ -1,0 +1,227 @@
+# ===================================
+# Colección de Testing API EduTrack
+# ===================================
+# URL Base: http://localhost:3001
+# Descripción: Testing completo de la API backend de EduTrack
+# ===================================
+
+@baseUrl = http://localhost:3001
+@contentType = application/json
+
+# ===================================
+# HEALTH CHECK Y ENDPOINTS BÁSICOS
+# ===================================
+
+### Endpoint raíz - Bienvenida y documentación de la API
+GET {{baseUrl}}/
+
+### Health Check - Verificar estado del servidor
+GET {{baseUrl}}/health
+
+### Ping-Pong - Test de conectividad
+POST {{baseUrl}}/ping
+Content-Type: {{contentType}}
+
+# ===================================
+# ENDPOINTS DE AUTENTICACIÓN
+# ===================================
+
+### Registrar nuevo usuario
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "name": "Juan Pérez",
+  "email": "juan.perez@example.com",
+  "password": "miPassword123"
+}
+
+### Registrar usuario - Caso de error (campos faltantes)
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "incompleto@example.com"
+}
+
+### Iniciar sesión
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "juan.perez@example.com",
+  "password": "miPassword123"
+}
+
+### Login - Caso de error (contraseña incorrecta)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "juan.perez@example.com",
+  "password": "passwordIncorrecto"
+}
+
+### Login - Caso de error (usuario no encontrado)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "noexiste@example.com",
+  "password": "cualquierPassword"
+}
+
+# ===================================
+# ENDPOINTS DE MATERIAS
+# ===================================
+
+### Crear nueva materia
+POST {{baseUrl}}/subject/add
+Content-Type: {{contentType}}
+
+{
+  "name": "Programación Web",
+  "objective": "Aprender a desarrollar aplicaciones web completas usando tecnologías modernas",
+  "content": "HTML, CSS, JavaScript, Node.js, Express, MongoDB, React"
+}
+
+### Crear otra materia
+POST {{baseUrl}}/subject/add
+Content-Type: {{contentType}}
+
+{
+  "name": "Base de Datos",
+  "objective": "Dominar el diseño y gestión de bases de datos relacionales y no relacionales",
+  "content": "SQL, NoSQL, MongoDB, MySQL, Normalización, Índices"
+}
+
+### Crear materia - Caso de error (campos faltantes)
+POST {{baseUrl}}/subject/add
+Content-Type: {{contentType}}
+
+{
+  "name": "Materia Incompleta"
+}
+
+### Obtener materia específica por nombre
+GET {{baseUrl}}/subject/get?name=Programación Web
+
+### Obtener materia - Caso no encontrado
+GET {{baseUrl}}/subject/get?name=MateriaQueNoExiste
+
+### Obtener todas las materias
+GET {{baseUrl}}/subject/getAll
+
+### Actualizar materia (reemplazar ID con ObjectId real de MongoDB)
+PUT {{baseUrl}}/subject/update/##REEMPLAZAR_ID_MONGO##
+Content-Type: {{contentType}}
+
+{
+  "name": "Desarrollo Full Stack",
+  "objective": "Crear aplicaciones web completas desde el frontend hasta el backend",
+  "content": "React, Node.js, Express, MongoDB, Authentication, Deployment"
+}
+
+### Actualizar materia - Caso de error (ID inválido)
+PUT {{baseUrl}}/subject/update/invalidObjectId
+Content-Type: {{contentType}}
+
+{
+  "name": "Test Update",
+  "objective": "Test objective",
+  "content": "Test content"
+}
+
+### Eliminar materia por nombre
+DELETE {{baseUrl}}/subject/delete?name=Base de Datos
+
+### Eliminar materia - Caso no encontrado
+DELETE {{baseUrl}}/subject/delete?name=MateriaQueNoExiste
+
+# ===================================
+# ENDPOINTS DE NOTIFICACIONES
+# ===================================
+
+### Enviar notificación por email
+POST {{baseUrl}}/notification/send
+Content-Type: {{contentType}}
+
+{
+  "to": "edutrackerbusiness@gmail.com",
+  "subject": "Bienvenido a EduTrack",
+  "message": "¡Hola! Te has registrado exitosamente en EduTrack. Esperamos que tengas una excelente experiencia aprendiendo."
+}
+
+### Enviar notificación - Caso de error (parámetros faltantes)
+POST {{baseUrl}}/notification/send
+Content-Type: {{contentType}}
+
+{
+  "to": "test@example.com"
+}
+
+### Enviar notificación - Prueba múltiples destinatarios
+POST {{baseUrl}}/notification/send
+Content-Type: {{contentType}}
+
+{
+  "to": "estudiante1@example.com, estudiante2@example.com",
+  "subject": "Recordatorio de Clase",
+  "message": "Les recordamos que mañana tenemos clase de Programación Web a las 14:00 hs."
+}
+
+# ===================================
+# PRUEBAS DE INTEGRACIÓN
+# ===================================
+
+### Flujo completo: Registrar → Login → Crear Materia → Obtener Materias
+# Paso 1: Registrar
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "name": "Ana García",
+  "email": "ana.garcia@example.com",
+  "password": "segura123"
+}
+
+###
+# Paso 2: Iniciar sesión (copiar token de respuesta si se implementa middleware JWT)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "ana.garcia@example.com",
+  "password": "segura123"
+}
+
+###
+# Paso 3: Crear materia
+POST {{baseUrl}}/subject/add
+Content-Type: {{contentType}}
+
+{
+  "name": "Testing y QA",
+  "objective": "Aprender metodologías de testing y aseguramiento de calidad",
+  "content": "Unit Testing, Integration Testing, API Testing, Jest, Postman"
+}
+
+###
+# Paso 4: Verificar creación
+GET {{baseUrl}}/subject/getAll
+
+# ===================================
+# PRUEBAS DE RENDIMIENTO
+# ===================================
+
+### Prueba de carga - Crear múltiples materias rápidamente (nombre único por GUID)
+POST {{baseUrl}}/subject/add
+Content-Type: {{contentType}}
+
+{
+  "name": "Materia Test {{$guid}}",
+  "objective": "Objetivo de prueba para testing de carga",
+  "content": "Contenido generado automáticamente para testing"
+}
+
+# {{$guid}} genera un identificador único en cada petición con REST Client de VS Code.

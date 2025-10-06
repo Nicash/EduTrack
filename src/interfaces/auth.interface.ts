@@ -1,4 +1,4 @@
-//Interfaz de autenticacion
+// Interfaz de autenticación
 
 export interface Auth {
     email: string;

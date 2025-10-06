@@ -1,11 +1,28 @@
-//Definimos los controladores para las materias
+// Definimos los controladores para las materias
+
+// Librerías externas
 import { Request, Response } from "express";
+
+// Módulos locales
 import { createSubject, obtainAllSubjects, obtainSubject, removeSubject, modifySubject } from "../services/subject";
 import { handleHttp } from "../utils/error.handle";
 
-//Controlador agregar materias
+// Controlador para agregar materias
 export const addSubject = async (req: Request, res: Response) => {
   try {
+    const { name, objective, content } = req.body;
+    
+    // Validación de campos requeridos
+    if (!name || !objective || !content) {
+      return res.status(400).json({ error: "Name, objective and content are required" });
+    }
+    
+    // Validar que no exista una materia con el mismo nombre
+    const existing = await obtainSubject(name);
+    if (existing) {
+      return res.status(409).json({ error: "Subject with this name already exists" });
+    }
+
     const subject = await createSubject(req.body);
     res.status(201).json(subject);
   } catch (error) {
@@ -13,18 +30,29 @@ export const addSubject = async (req: Request, res: Response) => {
   }
 };
 
-//Controlador obtener materia
+// Controlador para obtener materia
 export const getSubject = async (req: Request, res: Response) => {
   try {
     const {name} = req.query;
+    
+    // Validación de parámetro requerido
+    if (!name) {
+      return res.status(400).json({ error: "Subject name is required" });
+    }
+    
     const subject = await obtainSubject(name as string);
+    
+    if (!subject) {
+      return res.status(404).json({ error: "Subject not found" });
+    }
+    
     res.status(200).json(subject);
   } catch (error) {
     handleHttp(res, 'ERROR_GET_ITEM');
   }
 };
 
-//Controlador obtener todas las materias
+// Controlador para obtener todas las materias
 export const getAllSubjects = async (req: Request, res: Response) => {
   try {
     const subjects = await obtainAllSubjects();
@@ -34,7 +62,7 @@ export const getAllSubjects = async (req: Request, res: Response) => {
   }
 };
 
-//Controlador eliminar materia
+// Controlador para eliminar materia
 export const deleteSubject = async (req: Request, res: Response) => {
   try {
     const {name} = req.query;
@@ -53,10 +81,9 @@ export const deleteSubject = async (req: Request, res: Response) => {
   }
 };
 
-//Controlador modificar materia
+// Controlador para modificar materia
 export const updateSubject = async (req: Request, res: Response) => {
   try {
-
     const {id} = req.params;
     const updateData = req.body;
 

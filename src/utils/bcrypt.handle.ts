@@ -1,18 +1,18 @@
-//hash es una funcion que permite generar una version cifrada de un password
-//compare es una funcion que compara un password en texto plano con un hash para verificar si coinciden
+// Hash es una función que permite generar una versión cifrada de una password
+// Compare es una función que compara una password en texto plano con un hash para verificar si coinciden
+
+// Librerías externas
 import { hash, compare } from "bcryptjs";
 
-//encrypt recibe un password y la devuelve encryptada
+// Encrypt recibe una password y la devuelve encriptada
 const encrypt = async (pass: string) => {
-
-    const passwordHash = await hash(pass, 8); //Crea la password encryptada
+    const passwordHash = await hash(pass, 8); // Crea la password encriptada
     return passwordHash;
 };
 
-//verified compara la password con su version encryptada para verificar si coinciden
+// Verified compara la password con su versión encriptada para verificar si coinciden
 const verified = async (pass: string, passHash: string) => {
-
-    const isCorrect = await compare(pass, passHash); //Compara ambas passwords
+    const isCorrect = await compare(pass, passHash); // Compara ambas passwords
     return isCorrect;
 };
 

@@ -9,6 +9,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src"],          // solo compila backend
-  "exclude": ["node_modules", "angular"]  // ignora frontend Angular
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
